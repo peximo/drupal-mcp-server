@@ -71,6 +71,10 @@ const TOOLS: Tool[] = [
         inputSchema: {
             type: 'object',
             properties: {
+                nodeType: {
+                    type: 'string',
+                    description: 'The machine name of the content type (e.g., "article", "page", "blog_post")',
+                },
                 nodeId: {
                     type: 'string',
                     description: 'The UUID or numeric ID of the node',
@@ -81,7 +85,7 @@ const TOOLS: Tool[] = [
                     description: 'Related entities to include (e.g., ["field_image", "uid"] to include image and author)',
                 },
             },
-            required: ['nodeId'],
+            required: ['nodeType', 'nodeId'],
         },
     },
     {
@@ -165,6 +169,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
             case 'get_node': {
                 const typedArgs = args as unknown as GetNodeArgs;
                 const node = await drupalClient.getNode(
+                    typedArgs.nodeType,
                     typedArgs.nodeId,
                     typedArgs.include || []
                 );

@@ -79,6 +79,7 @@ export class DrupalClient {
      * Get a single node by ID with optional includes
      */
     async getNode(
+        contentType: string,
         nodeId: string,
         include: string[] = []
     ): Promise<DrupalNode> {
@@ -92,7 +93,7 @@ export class DrupalClient {
             }
 
             const response = await this.client.get<JsonApiResponse>(
-                `/node/node/${nodeId}`,
+                `/node/${contentType}/${nodeId}`,
                 { params }
             );
 

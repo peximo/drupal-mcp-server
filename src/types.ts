@@ -45,6 +45,7 @@ export interface QueryContentArgs {
 }
 
 export interface GetNodeArgs {
+    nodeType: string,
     nodeId: string;
     include?: string[]; // Related entities to include
 }
